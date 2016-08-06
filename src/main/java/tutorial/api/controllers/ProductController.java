@@ -17,9 +17,9 @@ public class ProductController extends ApiController {
     public List<Product> showAll() {
         List<Product> products = new ArrayList<>();
 
-        products.add(new Product(1, "Macbook Air", new BigDecimal("999.95")));
-        products.add(new Product(2, "Microsoft Surface 3", new BigDecimal("449")));
-        products.add(new Product(3, "Chromebook Pixel C", new BigDecimal("595.50"))
+        products.add(new Product(1, "Macbook Air", new BigDecimal("999.95"), "https://tweakers.net/serie/1067/macbook-air/overzicht/"));
+        products.add(new Product(2, "Microsoft Surface 3", new BigDecimal("449"), "https://tweakers.net/product/427345/microsoft-surface-3-wifi/overzicht/"));
+        products.add(new Product(3, "Chromebook Pixel C", new BigDecimal("595.50"), "https://tweakers.net/product/425264/google-chromebook-pixel-(2015)/overzicht/")
         );
 
         return products;
