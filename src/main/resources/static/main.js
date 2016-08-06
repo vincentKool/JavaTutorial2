@@ -15,7 +15,16 @@ var Main = class Main extends React.Component {
         })
         .always((err) => {
             this.setState({loadingProducts: false});
-        });
+        })
+        .done((products) => {
+            products.forEach( (product, idx) => {
+                $.get('http://localhost:8080/api/products/'+(product.id), (newProduct) => {
+                var products = this.state.products.slice()
+                products[newProduct.id - 1] = newProduct;
+                this.setState({ products: products })
+                    console.log(newProduct.name);
+                        })})
+                      });
 
         $.get('http://localhost:8080/api/lists', (lists) => {
             this.setState({lists});
