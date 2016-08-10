@@ -1,21 +1,27 @@
-// ProductList.java
 package tutorial.persistence.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class ProductList {
 
-    private final long id;
-    private final String name;
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Column(nullable=false)
+    private String name;
+
+    @ManyToMany
+    @JsonManagedReference
     private List<Product> products;
 
-    public ProductList(String name) {
-        this.id = -1;
-        this.name = name;
-    }
+    public ProductList() {}
 
-    public ProductList(long id, String name) {
-        this.id = id;
+    public ProductList(String name) {
         this.name = name;
     }
 
@@ -29,10 +35,6 @@ public class ProductList {
 
     public List<Product> getProducts() {
         return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
 }

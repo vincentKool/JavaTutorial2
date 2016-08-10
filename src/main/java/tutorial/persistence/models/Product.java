@@ -1,22 +1,31 @@
-// Product.java
 package tutorial.persistence.models;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
+
+@Entity
 public class Product {
 
-    private final long id;
-    private final String name;
-    private final BigDecimal price;
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Column(nullable=false)
+    private String name;
+
+    @Column(nullable=false)
+    private BigDecimal price;
+
+    @ManyToMany(mappedBy="products")
+    @JsonBackReference
+    private List<ProductList> lists;
+
+    public Product() {}
 
     public Product(String name, BigDecimal price) {
-        this.id = -1;
-        this.name = name;
-        this.price = price;
-    }
-
-    public Product(long id, String name, BigDecimal price) {
-        this.id = id;
         this.name = name;
         this.price = price;
     }
@@ -31,6 +40,10 @@ public class Product {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public List<ProductList> getLists() {
+        return lists;
     }
 
 }
