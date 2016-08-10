@@ -1,0 +1,6 @@
+CREATE TABLE store (
+    id BIGINT AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
