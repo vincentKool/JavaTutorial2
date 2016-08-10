@@ -26,4 +26,13 @@ public class ProductListController extends ApiController {
         return productListRepository.findOne(productListId);
     }
 
+    @RequestMapping(value="/lists/filter/{filterName}", method=RequestMethod.GET)
+    public List<ProductList> showAllWithFilter(@PathVariable String filterName) {
+         if (filterName.equals("nonempty")) {
+            return productListRepository.findByProductsIsNotNull();
+        } else {
+                return (List<ProductList>) productListRepository.findAll();
+        }
+
+    }
 }
