@@ -32,6 +32,12 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.flywaydb:flyway-core")
+
+
 }
 
 task wrapper(type: Wrapper) {
