@@ -18,7 +18,7 @@ public class Product {
 
     @Column(nullable=false)
     @NotNull
-    @Size(min=1)
+    @Size(min=1, max=200)
     private String name;
 
     @Column(nullable=false)

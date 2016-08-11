@@ -26,4 +26,12 @@ public class ExceptionHandlingControllerAdvice {
     response.sendError(HttpStatus.BAD_REQUEST.value(), String.join(", ", messages));
     }
 
+    @ResponseStatus(value= HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public void error(IllegalArgumentException exception,
+                      HttpServletResponse response) throws IOException {
+
+        response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+    }
+
 }

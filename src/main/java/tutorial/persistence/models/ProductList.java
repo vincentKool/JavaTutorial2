@@ -16,7 +16,7 @@ public class ProductList {
 
     @Column(nullable=false)
     @NotNull
-    @Size(min=5)
+    @Size(min=5, max=200)
     private String name;
 
     @ManyToMany

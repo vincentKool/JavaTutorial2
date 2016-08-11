@@ -35,9 +35,12 @@ public class ProductListController extends ApiController {
 
     @RequestMapping(path = "/lists/{listId}/products", method = RequestMethod.POST)
     public void addProduct(@PathVariable("listId") long listId,
-                           @RequestParam("productId") long productId) {
+                           @RequestParam("productId") long productId) throws IllegalArgumentException {
         ProductList productList = productListRepository.findOne(listId);
         Product product = productRepository.findOne(productId);
+
+        if(product == null) throw new IllegalArgumentException("The product with productId: "+productId+ " does not exist");
+        if(productList == null) throw new IllegalArgumentException("The productList with listId: "+listId + " does not exist");
 
         productList.getProducts().add(product);
         productListRepository.save(productList);
