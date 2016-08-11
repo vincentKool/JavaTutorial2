@@ -3,6 +3,9 @@ package tutorial.persistence.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -14,9 +17,13 @@ public class Product {
     private long id;
 
     @Column(nullable=false)
+    @NotNull
+    @Size(min=1)
     private String name;
 
     @Column(nullable=false)
+    @NotNull
+    @DecimalMin(value="0")
     private BigDecimal price;
 
     @ManyToMany(mappedBy="products")

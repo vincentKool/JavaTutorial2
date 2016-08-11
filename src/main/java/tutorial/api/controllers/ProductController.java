@@ -24,4 +24,10 @@ public class ProductController extends ApiController {
         return productRepository.findOne(productId);
     }
 
+    @RequestMapping(value="/products", method = RequestMethod.POST)
+    public void insert(@RequestParam("name") String name,
+                       @RequestParam("price") BigDecimal price) {
+        Product product = new Product(name, price);
+        productRepository.save(product);
+    }
 }
