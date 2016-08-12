@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tutorial.persistence.models.Product;
 import tutorial.persistence.repositories.ProductRepository;
+import tutorial.services.twitter.TwitterService;
+import tutorial.services.twitter.api.TwitterTweet;
 import tutorial.services.youtube.YoutubeService;
 import tutorial.services.youtube.api.YoutubeVideo;
 
@@ -18,6 +20,10 @@ public class ProductController extends ApiController {
 
     @Autowired
     YoutubeService youtubeService;
+
+    @Autowired
+    TwitterService twitterService;
+
 
     @RequestMapping(value="/products", method=RequestMethod.GET)
     public List<Product> showAll() {
@@ -35,6 +41,14 @@ public class ProductController extends ApiController {
         Product product = productRepository.findOne(productId);
 
         return youtubeService.searchVideos(product.getName());
+    }
+
+    @RequestMapping(value="/products/{productId}/twitter", method=RequestMethod.GET)
+    public List<TwitterTweet> getTweets(@PathVariable("productId")
+                                                       long productId) {
+        Product product = productRepository.findOne(productId);
+
+        return twitterService.searchTweets(product.getName());
     }
 
     @RequestMapping(value="/products", method = RequestMethod.POST)

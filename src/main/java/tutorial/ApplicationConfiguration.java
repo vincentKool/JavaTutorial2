@@ -13,4 +13,12 @@ public class ApplicationConfiguration {
         return youtubeApiKey;
     }
 
+    @Value("${application.twitter.bearer_token}")
+    private String twitterBearer;
+
+    public String getTwitterBearer() {
+        return twitterBearer;
+    }
+
+
 }
