@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class Video {
@@ -24,17 +25,24 @@ public class Video {
     @NotNull
     private String youtubeId;
 
+    @Column(nullable = false)
+    @NotNull
+    private Date publishedAt;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="productId", nullable=false)
     @JsonBackReference
     private Product product;
 
+
+
     public Video() {}
 
-    public Video(String title, String description, String youtubeId, Product product) {
+    public Video(String title, String description, String youtubeId, Date publishedAt, Product product) {
         this.title = title;
         this.description = description;
         this.youtubeId = youtubeId;
+        this.publishedAt = publishedAt;
         this.product = product;
     }
 
@@ -53,6 +61,8 @@ public class Video {
     public String getYoutubeId() {
         return youtubeId;
     }
+
+    public Date getPublishedAt() { return publishedAt; }
 
     public Product getProduct() {
         return product;

@@ -1,9 +1,12 @@
 package tutorial.services.youtube.api;
 
+import java.util.Date;
+
 public class YoutubeVideoSnippet {
 
     String title;
     String description;
+    Date publishedAt;
 
     public String getTitle() {
         return title;
@@ -21,4 +24,7 @@ public class YoutubeVideoSnippet {
         this.description = description;
     }
 
+    public Date getPublishedAt() {return publishedAt; }
+
+    public void setPublishedAt(Date publishedAt) { this.publishedAt = publishedAt; }
 }
