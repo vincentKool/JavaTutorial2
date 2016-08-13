@@ -4,6 +4,8 @@ import com.jayway.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 import tutorial.ApplicationIntegrationTest;
+import tutorial.persistence.models.ProductList;
+import tutorial.persistence.repositories.ProductListRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,18 +52,7 @@ public class ProductListControllerTest  extends ApplicationIntegrationTest {
         put("name", "Wishlist");
         put("products", new ArrayList<HashMap>());
     }};
-
-    private HashMap<String, Object> stubProductList3_filled = new HashMap<String,
-            Object>() {{
-        put("id", 3);
-        put("name", "Wishlist");
-        put("products", new ArrayList<HashMap>() {{
-            add(stubProduct2);
-        }});
-    }};
-
-
-
+    
     @Test
     public void showAll() throws Exception {
         Response response = get("/api/lists");
@@ -98,8 +89,15 @@ public class ProductListControllerTest  extends ApplicationIntegrationTest {
         }
     }
 
+
+
     @Test
-    public void insert() throws Exception {
+    public void insertAndAddProduct() throws Exception {
+        insert();
+        addProduct();
+    }
+
+    private void insert() throws Exception {
         Response insertResponse = given().parameters("name", stubProductList3.get("name")).post("/api/lists");
         Assert.assertEquals(200, insertResponse.getStatusCode());
 
@@ -115,27 +113,29 @@ public class ProductListControllerTest  extends ApplicationIntegrationTest {
         }
     }
 
-    @Test
-    public void addProduct() {
-        stubProductList2.put("products", new ArrayList<HashMap>() {{
+    private void addProduct() {
+        HashMap<String, Object> stubProductListFilled = new HashMap();
+        stubProductListFilled.putAll(stubProductList3);
+
+        stubProductListFilled.put("products", new ArrayList<HashMap>() {{
             add(stubProduct2);
         }});
 
         Response insertResponse = given()
-                .parameters("ListId", stubProductList2.get("id"),
+                .parameters("ListId", stubProductListFilled.get("id"),
                             "productId", stubProduct2.get("id"))
-                .post("/api/lists/{listId}/products", stubProductList2.get("id"));
+                .post("/api/lists/{listId}/products", stubProductListFilled.get("id"));
         Assert.assertEquals(200, insertResponse.getStatusCode());
 
-        Response getResponse = get("/api/lists/{productListId}", stubProductList2.get("id"));
+        Response getResponse = get("/api/lists/{productListId}", stubProductListFilled.get("id"));
         Assert.assertEquals(200, getResponse.getStatusCode());
         String json = getResponse.asString();
 
         HashMap<String, Object> product = from(json).get();
 
-        for (String key : stubProductList2.keySet()) {
+        for (String key : stubProductListFilled.keySet()) {
             Assert.assertTrue(product.containsKey(key));
-            Assert.assertEquals(product.get(key), stubProductList2.get(key));
+            Assert.assertEquals(product.get(key), stubProductListFilled.get(key));
         }
     }
 }
